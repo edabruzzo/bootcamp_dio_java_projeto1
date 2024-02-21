@@ -1,5 +1,6 @@
 package br.com.abruzzo.primeiros_passos_spring;
 
+import br.com.abruzzo.primeiros_passos_spring.controller.EstadoControllerApi;
 import br.com.abruzzo.primeiros_passos_spring.controller.RegiaoControllerApi;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,14 @@ class PrimeirosPassosSpringApplicationTests {
 	@Autowired
 	RegiaoControllerApi regiaoControllerApi;
 
+	@Autowired
+	EstadoControllerApi estadoControllerApi;
+
+
 	@Test
 	void contextLoads() {
 		assertThat(regiaoControllerApi).isNotNull();
+		assertThat(estadoControllerApi).isNotNull();
 	}
 
 }

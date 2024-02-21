@@ -1,6 +1,8 @@
 package br.com.abruzzo.primeiros_passos_spring.service;
 
+import br.com.abruzzo.primeiros_passos_spring.dto.EstadoDto;
 import br.com.abruzzo.primeiros_passos_spring.dto.RegiaoDto;
+import br.com.abruzzo.primeiros_passos_spring.dto.mappers.EstadoMapper;
 import br.com.abruzzo.primeiros_passos_spring.dto.mappers.RegiaoMapper;
 import br.com.abruzzo.primeiros_passos_spring.model.Estado;
 import br.com.abruzzo.primeiros_passos_spring.repository.RegiaoRepository;
@@ -16,8 +18,8 @@ public class RegiaoService {
     @Autowired
     RegiaoRepository regiaoRepository;
 
-    public List<Estado> obterEstadosPorRegiao(String nomeRegiao){
-        return regiaoRepository.findEstadosByNomeRegiao(nomeRegiao);
+    public List<EstadoDto> obterEstadosPorRegiao(String nomeRegiao){
+        return regiaoRepository.findEstadosByNomeRegiao(nomeRegiao).stream().map(EstadoMapper::converterEstadoModelParaDto).collect(Collectors.toList());
     }
 
 

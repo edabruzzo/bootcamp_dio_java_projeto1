@@ -1,5 +1,6 @@
 package br.com.abruzzo.primeiros_passos_spring.controller;
 
+import br.com.abruzzo.primeiros_passos_spring.dto.EstadoDto;
 import br.com.abruzzo.primeiros_passos_spring.dto.RegiaoDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,14 @@ class RegiaoControllerApiTest {
                 ArrayList.class);
         assertThat(listaRegioes).size().isEqualTo(5);
 
+    }
+
+    @Test
+    void listarEstadosPorRegiao() {
+        String nomeRegiao = "Nordeste";
+        String endpointTeste = urlBase + port + "/" + endpoint + "/" + nomeRegiao + "/estados";
+                List<EstadoDto> listaEstadosPorRegiao = this.restTemplate.getForObject(endpointTeste,
+                ArrayList.class);
+        assertThat(listaEstadosPorRegiao).size().isEqualTo(9);
     }
 }
