@@ -6,16 +6,20 @@ import br.com.abruzzo.primeiros_passos_spring.model.Regiao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 public class EstadoMapper {
 
 
     public static EstadoDto converterEstadoModelParaDto(Estado estado) {
-        return EstadoDto.builder()
+        EstadoDto estadoDto = (Objects.nonNull(estado)) ? EstadoDto.builder()
                 .idEstado(estado.getIdEstado())
                 .nomeEstado(estado.getNomeEstado())
                 .siglaEstado(estado.getSiglaEstado())
                 .nomeCapital(estado.getNomeCapital())
-                .build();
+                .build() : null;
+
+        return estadoDto;
     }
 }

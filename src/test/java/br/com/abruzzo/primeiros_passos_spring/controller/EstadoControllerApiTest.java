@@ -35,4 +35,24 @@ public class EstadoControllerApiTest {
 
     }
 
+    @Test
+    void obterEstadoPorSigla() {
+        String sigla = "SP";
+        String endpointTeste = urlBase + port + "/" + endpoint + "/sigla/" + sigla;
+        EstadoDto estadoDto = this.restTemplate.getForObject(endpointTeste,
+                EstadoDto.class);
+        assertThat(estadoDto).isNotNull();
+        assertThat(estadoDto.getNomeEstado()).isEqualTo("São Paulo");
+    }
+
+    @Test
+    void verificaQue_retornaNulo_quandoPesquisadaSiglaInexistente() {
+        String sigla = "XXXXXXX";
+        String endpointTeste = urlBase + port + "/" + endpoint + "/sigla/" + sigla;
+        EstadoDto estadoDto = this.restTemplate.getForObject(endpointTeste,
+                EstadoDto.class);
+        assertThat(estadoDto).isNull();
+    }
+
+
 }
