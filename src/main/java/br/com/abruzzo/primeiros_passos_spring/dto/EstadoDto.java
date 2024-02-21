@@ -9,12 +9,14 @@ import lombok.*;
 @Data
 @Builder // https://www.baeldung.com/lombok-builder-custom-setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class EstadoDto {
 
     private Integer idEstado;
     private String siglaEstado;
     private String nomeEstado;
     private String nomeCapital;
+    private Integer idregiao;
 
 
     /*

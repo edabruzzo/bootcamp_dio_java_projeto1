@@ -20,6 +20,8 @@ public class PrimeirosPassosSpringApplication {
 	public CommandLineRunner run(ConversorJson conversor, MensagensService mensagensService, EstadoService estadoService, RegiaoService regiaoService){
 		return args ->{
 
+			/*
+
 			estadoService.obterTodosEstados().stream().forEach(System.out::println);
 			String json = "{\"cep\":\"09999-999\", \"logradouro\":\"Rua Aurora\"}";
 			mensagensService.enviarMensagem(conversor.converter(json));
@@ -40,6 +42,7 @@ public class PrimeirosPassosSpringApplication {
 			System.out.println("ESTADOS DO SUL:");
 			regiaoService.obterEstadosPorRegiao("Sul").stream().forEach(System.out::println);
 
+			*/
 		};
 	}
 

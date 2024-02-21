@@ -21,7 +21,7 @@ public class RegiaoDto {
     private Integer idRegiao;
     private String codRegiao;
     private String nomeRegiao;
-    private List<EstadoDto> listaEstados;
+    private List<Integer> listaIdEstados;
 
 /*
     public RegiaoDto(Integer idRegiao, String codRegiao, String nomeRegiao, List<EstadoDto> listaEstados) {

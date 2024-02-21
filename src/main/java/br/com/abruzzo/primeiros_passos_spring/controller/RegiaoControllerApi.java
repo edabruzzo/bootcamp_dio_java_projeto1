@@ -4,7 +4,6 @@ package br.com.abruzzo.primeiros_passos_spring.controller;
 import br.com.abruzzo.primeiros_passos_spring.dto.EstadoDto;
 import br.com.abruzzo.primeiros_passos_spring.dto.RegiaoDto;
 import br.com.abruzzo.primeiros_passos_spring.service.RegiaoService;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +27,16 @@ public class RegiaoControllerApi {
     @GetMapping("/{nomeRegiao}/estados")
     public List<EstadoDto> listarEstadosPorRegiao(@PathVariable("nomeRegiao") String nomeRegiao){
         return regiaoService.obterEstadosPorRegiao(nomeRegiao);
+    }
+
+    @GetMapping("/{idRegiao}")
+    public RegiaoDto obterRegiaoPorId(@PathVariable("idRegiao") Integer idRegiao){
+        return regiaoService.obterRegiaoPorId(idRegiao);
+    }
+
+    @GetMapping("/nomeRegiao/{nomeRegiao}")
+    public RegiaoDto obterRegiaoPorNome(@PathVariable("nomeRegiao") String nomeRegiao){
+        return regiaoService.obterRegiaoPorNome(nomeRegiao);
     }
 
 }

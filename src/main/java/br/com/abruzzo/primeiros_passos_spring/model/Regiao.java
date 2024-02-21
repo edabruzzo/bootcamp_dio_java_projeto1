@@ -1,11 +1,17 @@
 package br.com.abruzzo.primeiros_passos_spring.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.util.List;
 
+/*
+https://developer.jboss.org/thread/109197
+ */
 @Entity
 @Getter
 @Setter
@@ -14,7 +20,8 @@ import java.util.List;
         query = "select r.listaEstados from Regiao r WHERE r.nomeRegiao=:nomeRegiao") // https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html
 @NoArgsConstructor
 @AllArgsConstructor // https://www.baeldung.com/intro-to-project-lombok
-public class Regiao implements Serializable {
+@Builder
+public class Regiao {
 
 
     @Id
@@ -27,7 +34,8 @@ public class Regiao implements Serializable {
     @Column(length = 20, nullable = false)
     private String nomeRegiao;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "regiao")
+    @OneToMany(mappedBy = "regiao", fetch = FetchType.EAGER, cascade= CascadeType.REMOVE)
+    //@JsonManagedReference // Tentando evitar dependência circular no mapeamento de DTOs
     private List<Estado> listaEstados;
 
     @Override

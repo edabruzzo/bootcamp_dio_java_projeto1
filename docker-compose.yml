@@ -4,6 +4,7 @@ services:
     volumes:
       - ./01-basegeografica.sql:/docker-entrypoint-initdb.d/01-basegeografica.sql
       - ./02-basegeografica.sql:/docker-entrypoint-initdb.d/02-basegeografica.sql
+      - ./03-basegeografica.sql:/docker-entrypoint-initdb.d/03-basegeografica.sql
     environment:
       POSTGRES_PASSWORD: "123456"
     ports:
