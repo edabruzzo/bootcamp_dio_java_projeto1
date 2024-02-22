@@ -9,6 +9,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/*
+
+SWAGGER -> OPENAPI (3.0)
+
+http://localhost:8080/swagger-ui/index.html#/estado-controller-api/inserirEstado
+http://localhost:8080/api-docs
+
+* */
 @RestController // https://zetcode.com/spring/deletemapping/
 @RequestMapping("estados")
 public class EstadoControllerApi {

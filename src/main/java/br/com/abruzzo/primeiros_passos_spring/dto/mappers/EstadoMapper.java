@@ -1,5 +1,6 @@
 package br.com.abruzzo.primeiros_passos_spring.dto.mappers;
 
+import br.com.abruzzo.primeiros_passos_spring.controller.exception.handler.RegiaoInvalidaException;
 import br.com.abruzzo.primeiros_passos_spring.dto.EstadoDto;
 import br.com.abruzzo.primeiros_passos_spring.model.Estado;
 import br.com.abruzzo.primeiros_passos_spring.model.Regiao;
@@ -31,13 +32,18 @@ public class EstadoMapper {
     }
 
     public  Estado converterEstadoDtoParaModel(EstadoDto estadoDto) {
+        Regiao regiaoEncontrada = null;
+        regiaoEncontrada = regiaoRepository.findById(estadoDto.getIdregiao()).orElse(null);
+        if(Objects.isNull(regiaoEncontrada)){
+           throw new RegiaoInvalidaException("Região informada não existe", null);
+        }
         return Estado.builder()
                 .nomeEstado(estadoDto.getNomeEstado())
                 .idEstado(estadoDto.getIdEstado())
                 .siglaEstado(estadoDto.getSiglaEstado())
                 .nomeCapital(estadoDto.getNomeCapital())
                 .nomeEstado(estadoDto.getNomeEstado())
-                .regiao(regiaoRepository.findById(estadoDto.getIdregiao()).orElse(null))
+                .regiao(regiaoEncontrada)
                 .build();
     }
 
