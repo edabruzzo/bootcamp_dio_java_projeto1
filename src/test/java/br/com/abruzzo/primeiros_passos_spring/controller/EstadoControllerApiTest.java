@@ -2,6 +2,7 @@ package br.com.abruzzo.primeiros_passos_spring.controller;
 
 
 import br.com.abruzzo.primeiros_passos_spring.controller.exception.handler.ProblemasInformacoesEstadoException;
+import br.com.abruzzo.primeiros_passos_spring.controller.exception.handler.RegiaoInvalidaException;
 import br.com.abruzzo.primeiros_passos_spring.dto.EstadoDto;
 import br.com.abruzzo.primeiros_passos_spring.dto.RegiaoDto;
 import org.junit.jupiter.api.Test;
@@ -102,7 +103,6 @@ public class EstadoControllerApiTest {
     void quandoInserirEstadoComInformacoesNulas_entaoDeveSerLancadaUmaExcecao(){
         String endpointTeste = urlBase + port + "/" + endpoint;
         EstadoDto estadoDto = new EstadoDto();
-
         //final Throwable excecaoLancada = catchThrowable(() -> this.restTemplate.postForEntity(endpointTeste, estadoDto, EstadoDto.class));
         //assertThat(excecaoLancada.getClass()).isEqualTo(ProblemasInformacoesEstadoException.class);
         //assertThatRuntimeException().isThrownBy(() -> this.restTemplate.postForEntity(endpointTeste, estadoDto, EstadoDto.class).getStatusCode().is4xxClientError());
@@ -113,6 +113,30 @@ public class EstadoControllerApiTest {
             assertThat(resposta.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
         }catch(Exception ex){
             assertThat(ex.getClass()).isEqualTo(ProblemasInformacoesEstadoException.class);
+        }
+    }
+
+
+    @Test
+    void quandoInserirEstadoComRegiaoInvalida_entaoDeveSerLancadaUmaExcecao(){
+        String endpointTeste = urlBase + port + "/" + endpoint;
+        EstadoDto estadoDto = new EstadoDto();
+        estadoDto.setIdEstado(1);
+        estadoDto.setSiglaEstado("AC");
+        estadoDto.setNomeEstado("Acre");
+        estadoDto.setNomeCapital("Rio Branco");
+        estadoDto.setIdregiao(100000);
+
+        //final Throwable excecaoLancada = catchThrowable(() -> this.restTemplate.postForEntity(endpointTeste, estadoDto, EstadoDto.class));
+        //assertThat(excecaoLancada.getClass()).isEqualTo(ProblemasInformacoesEstadoException.class);
+        //assertThatRuntimeException().isThrownBy(() -> this.restTemplate.postForEntity(endpointTeste, estadoDto, EstadoDto.class).getStatusCode().is4xxClientError());
+
+        try{
+            ResponseEntity resposta = this.restTemplate.postForEntity(endpointTeste, estadoDto, EstadoDto.class);
+            assertThat(resposta.getClass()).isEqualTo(ResponseEntity.class);
+            assertThat(resposta.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+        }catch(Exception ex){
+            assertThat(ex.getClass()).isEqualTo(RegiaoInvalidaException.class);
         }
     }
 
