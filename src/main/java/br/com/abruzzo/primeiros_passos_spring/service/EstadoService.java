@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 @Service
 public class EstadoService {
 
-    Logger logger = LoggerFactory.getLogger(EstadoService.class);
-
     @Autowired
     private EstadoRepository estadoRepository;
 
@@ -56,13 +54,8 @@ public class EstadoService {
             throw new ProblemasInformacoesEstadoException("[região]");
 
         Estado estadoInserido = null;
-        try{
-            estadoInserido = this.estadoRepository.save(this.estadoMapper.converterEstadoDtoParaModel(estadoDto));
-            return this.estadoMapper.converterEstadoModelParaDto(estadoInserido);
-        }catch(Exception e){
-            logger.error(e.getMessage(), e);
-            return null;
-        }
+        estadoInserido = this.estadoRepository.save(this.estadoMapper.converterEstadoDtoParaModel(estadoDto));
+        return this.estadoMapper.converterEstadoModelParaDto(estadoInserido);
     }
 
     public EstadoDto deletarEstadoPorNome(String nomeEstado) {

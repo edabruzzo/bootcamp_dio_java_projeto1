@@ -1,7 +1,10 @@
 package br.com.abruzzo.primeiros_passos_spring.controller.exception.handler;
 
 
+import br.com.abruzzo.primeiros_passos_spring.service.EstadoService;
 import jakarta.annotation.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,6 +17,8 @@ import java.util.Date;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+    Logger logger = LoggerFactory.getLogger(EstadoService.class);
 
     @Resource
     private MessageSource messageSource;
@@ -41,6 +46,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             UndeclaredThrowableException exception = (UndeclaredThrowableException) ex;
             return handleBusinessException((BusinessException)exception.getUndeclaredThrowable(), request);
         }else{
+            logger.error(ex.getMessage(), ex);
             String bodyOfResponse = this.messageSource.getMessage("error.server", new String[]{ex.getMessage()}, null);
             ResponseError responseError = responseError(bodyOfResponse, HttpStatus.INTERNAL_SERVER_ERROR);
             return handleExceptionInternal(ex, responseError,headers(), HttpStatus.INTERNAL_SERVER_ERROR, request);
@@ -49,6 +55,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = { BusinessException.class })
     protected ResponseEntity<Object> handleBusinessException(RuntimeException ex, WebRequest request) {
+        logger.error(ex.getMessage(), ex);
         ResponseError responseError = responseError(ex.getMessage(),HttpStatus.CONFLICT);
         return handleExceptionInternal(ex, responseError, headers(), HttpStatus.CONFLICT, request);
     }
