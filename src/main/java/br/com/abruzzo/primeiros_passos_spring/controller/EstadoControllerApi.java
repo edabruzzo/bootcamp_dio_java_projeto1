@@ -1,7 +1,6 @@
 package br.com.abruzzo.primeiros_passos_spring.controller;
 
 import br.com.abruzzo.primeiros_passos_spring.dto.EstadoDto;
-import br.com.abruzzo.primeiros_passos_spring.model.Estado;
 import br.com.abruzzo.primeiros_passos_spring.service.EstadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

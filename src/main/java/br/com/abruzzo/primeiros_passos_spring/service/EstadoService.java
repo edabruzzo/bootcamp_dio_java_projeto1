@@ -1,5 +1,6 @@
 package br.com.abruzzo.primeiros_passos_spring.service;
 
+import br.com.abruzzo.primeiros_passos_spring.controller.exception.handler.ProblemasInformacoesEstadoException;
 import br.com.abruzzo.primeiros_passos_spring.dto.EstadoDto;
 import br.com.abruzzo.primeiros_passos_spring.dto.mappers.EstadoMapper;
 import br.com.abruzzo.primeiros_passos_spring.model.Estado;
@@ -10,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 // https://www.baeldung.com/hibernate-initialize-proxy-exception
@@ -45,6 +46,15 @@ public class EstadoService {
     }
 
     public EstadoDto inserirEstado(EstadoDto estadoDto) {
+        if(Objects.isNull(estadoDto.getNomeCapital()))
+            throw new ProblemasInformacoesEstadoException("[nomeCapital]");
+        if(Objects.isNull(estadoDto.getNomeEstado()))
+            throw new ProblemasInformacoesEstadoException("[nomeEstado]");
+        if(Objects.isNull(estadoDto.getSiglaEstado()))
+            throw new ProblemasInformacoesEstadoException("[siglaEstado]");
+        if(Objects.isNull(estadoDto.getIdregiao()))
+            throw new ProblemasInformacoesEstadoException("[região]");
+
         Estado estadoInserido = null;
         try{
             estadoInserido = this.estadoRepository.save(this.estadoMapper.converterEstadoDtoParaModel(estadoDto));

@@ -1,6 +1,7 @@
 package br.com.abruzzo.primeiros_passos_spring.controller;
 
 
+import br.com.abruzzo.primeiros_passos_spring.controller.exception.handler.ProblemasInformacoesEstadoException;
 import br.com.abruzzo.primeiros_passos_spring.dto.EstadoDto;
 import br.com.abruzzo.primeiros_passos_spring.dto.RegiaoDto;
 import org.junit.jupiter.api.Test;
@@ -8,13 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 // https://spring.io/guides/gs/testing-web
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -95,6 +97,24 @@ public class EstadoControllerApiTest {
         assertThat(estado.getNomeEstado()).isEqualTo("Acre");
     }
 
+
+    @Test
+    void quandoInserirEstadoComInformacoesNulas_entaoDeveSerLancadaUmaExcecao(){
+        String endpointTeste = urlBase + port + "/" + endpoint;
+        EstadoDto estadoDto = new EstadoDto();
+
+        //final Throwable excecaoLancada = catchThrowable(() -> this.restTemplate.postForEntity(endpointTeste, estadoDto, EstadoDto.class));
+        //assertThat(excecaoLancada.getClass()).isEqualTo(ProblemasInformacoesEstadoException.class);
+        //assertThatRuntimeException().isThrownBy(() -> this.restTemplate.postForEntity(endpointTeste, estadoDto, EstadoDto.class).getStatusCode().is4xxClientError());
+
+        try{
+            ResponseEntity resposta = this.restTemplate.postForEntity(endpointTeste, estadoDto, EstadoDto.class);
+            assertThat(resposta.getClass()).isEqualTo(ResponseEntity.class);
+            assertThat(resposta.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+        }catch(Exception ex){
+            assertThat(ex.getClass()).isEqualTo(ProblemasInformacoesEstadoException.class);
+        }
+    }
 
 
 }
